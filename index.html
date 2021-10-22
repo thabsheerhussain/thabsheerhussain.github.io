@@ -1,0 +1,156 @@
+<html>
+
+<head>
+    <title>Thabsheer Hussain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    * {
+            margin: 0;
+            padding: 0;
+            /* position: relative; */
+            overflow: hidden;
+        }
+
+    body {
+            background: black;
+        }
+    .main{
+        height: 100%;
+        width: 100%;
+        position:absolute;
+        color: antiquewhite;
+        text-align: center;
+        
+    }
+    .name{
+        background-color: rgb(0, 0, 0,.75);
+        /* position:fixed;
+        align-self: center; */
+        display: inline-block;
+        vertical-align: middle;
+        padding: 10px;
+        line-height: normal;
+    }
+    .anime{
+        /* text-align: center; */
+        background-color: rgb(0, 0, 0,.75);
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        /* position:fixed; */
+    }
+
+
+    img{
+            border-radius: 50%;
+            border-color: aqua;
+            border: 2px solid aqua;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10%;
+    }
+    h2 span::before{
+        content: '';
+        color: #aa3939;
+        animation: profile 8s infinite;
+        }
+    @keyframes profile {
+        0% { content: 'DESIGNER'}
+        50% { content: 'DEVELOPER'}
+        100% { content: 'HACKER'}
+        }
+    .rightdown {
+            color: antiquewhite;
+            background-color: rgb(0, 0, 0,.75);
+            position:fixed;
+            bottom:0;
+            right:0;
+            padding: 10px;
+
+        }
+    .leftdown {
+            color: antiquewhite;
+            background-color: rgb(0, 0, 0,.75);
+            position:fixed;
+            bottom:0;
+            left:0;
+            padding: 10px;
+
+        }
+    a{
+        color: beige;
+        text-decoration: none;
+        
+        
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <img src="img.jpeg" alt="my_image" class="image">
+        <h1 class="name">Thabsheer Hussain</h1><br>
+        <h2 class="anime">You can call me <span></span></h2>
+    </div>
+    <footer>
+        <h4 class="rightdown"> <a href="https://drive.google.com/file/d/1QBCO8izym_x1HM8AgO0tbkoECZU0xC6l/view?usp=sharing" target="_blank" rel="noopener noreferrer"> Know more...</a></h4>
+        <h4 class="leftdown"><a href="https://api.whatsapp.com/send/?phone=9567803631" target="_blank" rel="noopener noreferrer"> Contact </a></h4>
+    </footer>
+    <canvas id="c">
+    </canvas>
+</body>
+
+<script>
+
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+
+    //making the canvas full screen
+    c.height = window.innerHeight;
+    c.width = window.innerWidth;
+
+    //english characters
+    var english = "1001010101110101010101010010101000101011101111010101010110101010101010101110000101";
+    //converting the string into an array of single characters
+    english = english.split("");
+
+    var font_size = 15;
+    var columns = c.width / font_size; //number of columns for the rain
+    //an array of drops - one per column
+    var drops = [];
+    //x below is the x coordinate
+    //1 = y co-ordinate of the drop(same for every drop initially)
+    for (var x = 0; x < columns; x++)
+        drops[x] = 1;
+
+    //drawing the characters
+    function draw() {
+        //Black BG for the canvas
+        //translucent BG to show trail
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "#0F0"; //green text
+        ctx.font = font_size + "px arial";
+        //looping over drops
+        for (var i = 0; i < drops.length; i++) {
+            //a random chinese character to print
+            var text = english[Math.floor(Math.random() * english.length)];
+            //x = i*font_size, y = value of drops[i]*font_size
+            ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+            //sending the drop back to the top randomly after it has crossed the screen
+            //adding a randomness to the reset to make the drops scattered on the Y axis
+            if (drops[i] * font_size > c.height && Math.random() > 0.975)
+                drops[i] = 0;
+
+            //incrementing Y coordinate
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+</script>
+
+</html>
